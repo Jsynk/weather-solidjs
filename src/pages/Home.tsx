@@ -1,11 +1,12 @@
 import { Show, For, createResource } from 'solid-js';
 import { onMount } from 'solid-js'
-import { A } from '@solidjs/router';
+import { A, useNavigate } from '@solidjs/router';
 import { selectedLocation, setSelectedLocation } from '../store';
 import type { WeatherData } from '../types/weather'
 
 const VITE_OPEN_WEATHER_MAP_API_KEY = import.meta.env.VITE_OPEN_WEATHER_MAP_API_KEY || ''
 export default function Home() {
+    const navigate = useNavigate()
     const checkWeather = () => {
         return selectedLocation.latitude == null || selectedLocation.longitude == null ? false : true
     }
@@ -31,10 +32,9 @@ export default function Home() {
     }
 
     const [weatherData] = createResource<WeatherData>(fetchWeatherData)
-    let mapLink: any
     onMount(() => {
         if(!checkWeather()) {
-            mapLink.click()
+            navigate('/map')
         }
     })
     return (
@@ -74,8 +74,6 @@ export default function Home() {
                         </For>
                     </div>
                 </Show>
-
-                <A ref={mapLink} href="/map"></A>
             </div>
         </div>
     )

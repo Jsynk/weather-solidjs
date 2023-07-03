@@ -1,4 +1,4 @@
-# Demo
+# Demo - Solid js, Tailwind, DaisyUI, Leaflet
 
 ![image info](./public/solid_weather_app.gif)
 

@@ -3,7 +3,7 @@ import L from 'leaflet';
 import { Map as MapType, Marker, Circle, LeafletMouseEvent } from 'leaflet'
 
 import { onMount, onCleanup } from 'solid-js'
-import { A } from '@solidjs/router';
+import { A, useNavigate } from '@solidjs/router';
 import { selectedLocation, setSelectedLocation, Location } from '../store';
 
 interface MarkerLocation {
@@ -13,6 +13,7 @@ interface MarkerLocation {
 }
 
 export default function Map() {
+  const navigate = useNavigate()
   let mapParentDiv: any;
   let mapDiv: any;
   let marker: Marker;
@@ -85,14 +86,12 @@ export default function Map() {
   }
 
   const checkLocationWeather = () => { 
-    homeLink.click() 
+    navigate('/')
   }
 
   const checkLocationWeatherDisabled = () => { 
     return selectedLocation.latitude != null && selectedLocation.data == null ? false: true
   }
-
-  let homeLink: any
 
   onMount(() => { 
     buildMap(mapDiv)
@@ -106,7 +105,6 @@ export default function Map() {
           <div class="grid gap-4 grid-cols-2 p-3 max-w-lg">
             <button class="btn btn-primary normal-case" onClick={selectGeoLocation}>Go to my GPS location</button>
             <button disabled={checkLocationWeatherDisabled()} class="btn btn-primary normal-case" onClick={checkLocationWeather}>Check weather at selected location</button>
-            <A ref={homeLink} href="/"></A>
           </div>
         </div>
       </div>
